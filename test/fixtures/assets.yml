@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  symbol: MyString
+  company_name: MyString
+  open: 1.5
+  close: 1.5
+  latest_price: 1.5
+  point_change: 1.5
+  change_percent: 1.5
+  sector: MyString
+  latest_time: MyString
+
+two:
+  symbol: MyString
+  company_name: MyString
+  open: 1.5
+  close: 1.5
+  latest_price: 1.5
+  point_change: 1.5
+  change_percent: 1.5
+  sector: MyString
+  latest_time: MyString
