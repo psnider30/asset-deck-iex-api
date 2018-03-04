@@ -10,18 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227023307) do
+ActiveRecord::Schema.define(version: 20180302222858) do
 
   create_table "assets", force: :cascade do |t|
     t.string "symbol"
-    t.string "company_name"
-    t.float "open"
-    t.float "close"
-    t.float "latest_price"
-    t.float "point_change"
-    t.float "change_percent"
-    t.string "sector"
-    t.string "latest_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_assets", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "asset_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "username"
+    t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
