@@ -39,6 +39,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (8.0.0)
+    bcrypt (3.1.11)
     builder (3.2.3)
     byebug (10.0.0)
     concurrent-ruby (1.0.5)
@@ -87,11 +88,6 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    rails_12factor (0.0.3)
-      rails_serve_static_assets
-      rails_stdout_logging
-    rails_serve_static_assets (0.0.5)
-    rails_stdout_logging (0.0.5)
     railties (5.1.5)
       actionpack (= 5.1.5)
       activesupport (= 5.1.5)
@@ -128,12 +124,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord
+  bcrypt (~> 3.1.11)
   byebug
   listen (>= 3.0.5, < 3.2)
   puma (~> 3.7)
   rack-cors
   rails (~> 5.1.5)
-  rails_12factor
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3

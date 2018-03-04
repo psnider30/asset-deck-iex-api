@@ -6,9 +6,9 @@ class Api::AssetsController < ApplicationController
   end
 
   def create
-    @movie = Movie.new(movie_params)
-    if @movie.save
-      render json: @movie
+    @asset = Asset.new(asset_params)
+    if @asset.save
+      render json: @asset
     else
       render json: { errors: { message: "This Asset Failed To Save" } }
     end

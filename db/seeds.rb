@@ -9,4 +9,4 @@
 Asset.create(symbol: 'SPY')
 Asset.create(symbol: 'DIA')
 
-User.create(email: 'paul@fake.com', username: 'ps30', password:'paul123')
+User.create(email: 'paul@fake.com', username: 'ps30', password:'paul123', password_confirmation:'paul123')
