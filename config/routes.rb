@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   namespace :api do
     resources :assets
     post '/login', to: "sessions#create"
+    post '/signup', to: "registrations#create"
   end
 end
