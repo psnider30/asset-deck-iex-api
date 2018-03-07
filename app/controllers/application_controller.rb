@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
 
   def current_user
     if auth_present?
-      user = User.find(auth["user"])
+      params[:asset] ? user = User.find_by(username: params[:asset][:username]) : user = User.find(auth["user"])
       if user
         @current_user ||= user
       end
@@ -16,9 +16,9 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate
-    render json: {error: "unauthorized"}, status: 401
-      unless logged_in?
-      end
+    if !logged_in?
+      render json: {error: "unauthorized"}, status: 401
+    end
   end
 
   private
