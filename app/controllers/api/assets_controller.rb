@@ -9,8 +9,11 @@ class Api::AssetsController < ApplicationController
     user = User.find_by(username: asset_params[:username])
     if user
       if asset = user.assets.build(symbol: asset_params[:symbol].upcase)
-        user.save
-        render json: asset
+        if user.save
+          render json: asset
+        else
+          render json: { errors: { message: "This Asset Alredy Added" } }
+        end
       else
         render json: { errors: { message: "This Asset Failed To Save" } }
       end
