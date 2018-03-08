@@ -8,7 +8,7 @@ class Api::AssetsController < ApplicationController
   def create
     user = User.find_by(username: asset_params[:username])
     if user
-      if asset = user.assets.build(symbol: asset_params[:symbol])
+      if asset = user.assets.build(symbol: asset_params[:symbol].upcase)
         user.save
         render json: asset
       else
