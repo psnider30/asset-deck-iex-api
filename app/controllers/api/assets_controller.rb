@@ -12,7 +12,7 @@ class Api::AssetsController < ApplicationController
         if user.save
           render json: asset
         else
-          render json: { errors: { message: "This Asset Alredy Added" } }
+          render json: { errors: { message: "You already added #{asset.symbol}" } }
         end
       else
         render json: { errors: { message: "This Asset Failed To Save" } }

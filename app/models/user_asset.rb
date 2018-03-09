@@ -7,9 +7,7 @@ class UserAsset < ApplicationRecord
   def unique_asset_per_user
     user = User.find(user_id)
     symbol = Asset.find(asset_id).symbol
-    if user.assets.find { |asset| asset.symbol == symbol }
-      errors.add(:id, "You already added #{symbol}")
-    end
+    errors.add(:id, "You already added #{symbol}") if user.assets.where(:symbol => symbol).present?
   end
 
 end
