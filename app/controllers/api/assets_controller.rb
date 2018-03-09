@@ -20,6 +20,19 @@ class Api::AssetsController < ApplicationController
     end
   end
 
+  def destroy
+    user = User.find_by(username: asset_params[:username])
+    symbol = asset_params[:symbol].upcase
+    if user
+      if asset = user.assets.find_by(symbol: symbol)
+        asset.destroy
+        render json: {success: { message: "Symbol #{symbol} for #{user.username} deleted" }}
+      else
+        render json: {errors: { message: "Asset not found" }}
+      end
+    end
+  end
+
   private
 
   def asset_params
