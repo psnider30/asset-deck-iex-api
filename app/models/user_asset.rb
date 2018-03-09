@@ -8,7 +8,7 @@ class UserAsset < ApplicationRecord
     user = User.find(user_id)
     asset = Asset.find(asset_id)
     symbol = asset.symbol
-    errors.add(:asset_id, "You already added #{symbol}") if user.assets.where(:symbol => symbol).present?
+    errors.add(:asset_id, ": You already added #{symbol}") if user.assets.where(:symbol => symbol).present?
   end
 
 end

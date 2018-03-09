@@ -5,5 +5,6 @@ Rails.application.routes.draw do
     post '/login', to: "sessions#create"
     post '/signup', to: "registrations#create"
     delete '/assets/delete', to: "assets#destroy"
+    put '/assets/update', to: "assets#update"
   end
 end

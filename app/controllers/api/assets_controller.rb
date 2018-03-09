@@ -8,15 +8,30 @@ class Api::AssetsController < ApplicationController
   def create
     user = User.find_by(username: asset_params[:username])
     if user
-      if asset = user.assets.build(symbol: asset_params[:symbol].upcase)
+      if asset = user.assets.build(symbol: asset_params[:symbol].upcase, uuid: asset_params[:uuid])
         if user.save
           render json: asset
         else
-          render json: { errors: { message: "#{user.user_assets.last.errors.messages[:asset_id][0]}" } }
+          render json: { errors: { message: "#{user.user_assets.last.errors.full_messages.first}" } }
+          user.user_assets.last.destroy
         end
       else
         render json: { errors: { message: "This Asset Failed To Save" } }
       end
+    end
+  end
+
+  def update
+    user = User.find_by(username: asset_params[:username])
+    if asset = user.assets.find_by(uuid: asset_params[:uuid])
+      asset.symbol = asset_params[:symbol].upcase
+      if asset.save
+        render json: { success: { message: "Asset updated to #{asset.symbol}" } }
+      else
+        render json: { errors: { message: "Asset update Failed" } }
+      end
+    else
+      render json: { errors: { message: "Asset not Found" } }
     end
   end
 
@@ -36,7 +51,7 @@ class Api::AssetsController < ApplicationController
   private
 
   def asset_params
-    params.require(:asset).permit(:symbol, :username)
+    params.require(:asset).permit(:symbol, :username, :uuid)
   end
 
 end
