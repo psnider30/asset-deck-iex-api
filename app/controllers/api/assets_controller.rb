@@ -4,7 +4,6 @@ class Api::AssetsController < ApplicationController
     user = User.find_by(username: asset_params[:username])
     if user
       assets = user.assets
-
       user_asset_shares = assets.map { |asset| asset.user_asset_shares(user.id) }
 
       render json: { assets: assets , user_asset_shares: user_asset_shares }

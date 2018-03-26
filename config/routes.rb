@@ -7,5 +7,6 @@ Rails.application.routes.draw do
     delete '/assets/delete', to: "assets#destroy"
     put '/assets/update', to: "assets#update"
     post 'assets/user-assets', to: "assets#index"
+    post 'assets/update-shares', to: "user_assets#update"
   end
 end
