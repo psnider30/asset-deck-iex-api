@@ -4,7 +4,10 @@ class Api::AssetsController < ApplicationController
     user = User.find_by(username: asset_params[:username])
     if user
       assets = user.assets
-      render json: assets
+
+      user_asset_shares = assets.map { |asset| asset.user_asset_shares(user.id) }
+
+      render json: { assets: assets , user_asset_shares: user_asset_shares }
     else
       render json: { errors: { message: "User not found" } }
     end
@@ -62,7 +65,7 @@ class Api::AssetsController < ApplicationController
   private
 
   def asset_params
-    params.require(:asset).permit(:symbol, :username, :uuid)
+    params.require(:asset).permit(:symbol, :username, :uuid, :shares)
   end
 
 end

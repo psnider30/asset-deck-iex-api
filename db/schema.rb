@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20180325221936) do
     t.integer "asset_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "shares"
+    t.integer "shares", default: 0
   end
 
   create_table "users", force: :cascade do |t|

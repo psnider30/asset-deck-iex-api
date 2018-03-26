@@ -3,7 +3,7 @@ class Api::UserAssetsController < ApplicationController
   def create
   end
 
-  def update 
+  def update
   end
 
   def destroy
@@ -12,6 +12,6 @@ class Api::UserAssetsController < ApplicationController
   private
 
   def asset_params
-    params.require(:asset).permit(:symbol, :username, :uuid)
+    params.require(:asset).permit(:shares, :username, :uuid)
   end
 end
