@@ -36,8 +36,11 @@ class Api::AssetsController < ApplicationController
   def update
     user = User.find_by(username: asset_params[:username])
     if asset = user.assets.find_by(uuid: asset_params[:uuid])
+      user_asset = UserAsset.find_by(asset_id: asset.id, user_id: user.id)
+      user_asset.shares = 0
       asset.symbol = asset_params[:symbol].upcase
       if asset.save
+        user_asset.save
         render json: { success: { message: "Asset updated to #{asset.symbol}" } }
       else
         render json: { errors: { message: "Asset update Failed" } }
