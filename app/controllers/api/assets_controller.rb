@@ -13,12 +13,13 @@ class Api::AssetsController < ApplicationController
   end
 
   def create
+
     user = User.find_by(username: asset_params[:username])
     if user
       if asset = Asset.find_by(symbol: asset_params[:symbol].upcase)
         user.association(:assets).send(:build_through_record, asset)
       else
-        user.assets.build(symbol: asset_params[:symbol].upcase, uuid: asset_params[:uuid])
+        asset = user.assets.build(symbol: asset_params[:symbol].upcase, uuid: asset_params[:uuid])
       end
 
       if user.save
@@ -35,18 +36,26 @@ class Api::AssetsController < ApplicationController
 
   def update
     user = User.find_by(username: asset_params[:username])
-    if asset = user.assets.find_by(uuid: asset_params[:uuid])
-      user_asset = UserAsset.find_by(asset_id: asset.id, user_id: user.id)
-      user_asset.shares = 0
-      asset.symbol = asset_params[:symbol].upcase
-      if asset.save
-        user_asset.save
-        render json: { success: { message: "Asset updated to #{asset.symbol}" } }
-      else
-        render json: { errors: { message: "Asset update Failed" } }
-      end
+    if oldAsset = user.assets.find_by(uuid: asset_params[:uuidOld])
+      UserAsset.find_by(asset_id: oldAsset.id, user_id: user.id).destroy
+    end
+
+    if asset = Asset.find_by(symbol: asset_params[:symbol].upcase)
+      user.association(:assets).send(:build_through_record, asset)
+      new_asset = false
     else
-      render json: { errors: { message: "Asset not Found" } }
+      asset = user.assets.build(symbol: asset_params[:symbol].upcase, uuid: asset_params[:uuid])
+      new_asset = true
+    end
+
+    if user.save
+      render json: {
+        success: { message: "Asset updated to #{asset.symbol}" },
+        uuid: asset.uuid,
+        new_asset: new_asset
+      }
+    else
+      render json: { errors: { message: "Asset update Failed" } }
     end
   end
 
@@ -56,7 +65,6 @@ class Api::AssetsController < ApplicationController
     if user
       if asset = user.assets.find_by(uuid: asset_params[:uuid])
         UserAsset.where(asset_id: asset.id, user_id: user.id).destroy_all
-        Asset.destroy(asset.id)
         render json: {success: { message: "Symbol #{symbol} for #{user.username} deleted" }}
       else
         render json: {errors: { message: "Asset not found" }}
@@ -67,7 +75,7 @@ class Api::AssetsController < ApplicationController
   private
 
   def asset_params
-    params.require(:asset).permit(:symbol, :username, :uuid, :shares)
+    params.require(:asset).permit(:symbol, :username, :uuid, :uuidOld, :shares)
   end
 
 end
