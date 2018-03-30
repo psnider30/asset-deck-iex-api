@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # root "welcome#index"
   namespace :api do
     resources :assets, only: [:create]
+
     post '/login', to: "sessions#create"
     post '/signup', to: "registrations#create"
     delete '/assets/delete', to: "assets#destroy"
