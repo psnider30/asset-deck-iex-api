@@ -7,5 +7,3 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 user = User.create(email: 'paul@fake.com', username: 'ps30', password:'paul123', password_confirmation:'paul123')
-user.assets.create(symbol: 'SPY')
-user.assets.create(symbol: 'DIA')
