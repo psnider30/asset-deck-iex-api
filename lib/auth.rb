@@ -2,7 +2,7 @@ require 'jwt'
 
 class Auth
 
-  ALGORITHM = 'HS256'
+  ALGORITHM = 'HS256'.freeze
 
   def self.issue(payload)
     JWT.encode(
@@ -22,6 +22,6 @@ class Auth
   end
 
   def self.auth_secret
-    ENV["AUTH_SECRET"]
+    Rails.application.secrets.secret_key_base
   end
 end
