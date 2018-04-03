@@ -141,7 +141,7 @@ DEPENDENCIES
   byebug
   figaro
   jwt
-  listen (>= 3.0.5, < 3.2)
+  listen
   pg
   pry
   puma (~> 3.7)
