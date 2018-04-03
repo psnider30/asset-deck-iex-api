@@ -5,8 +5,8 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(username: auth_params[:username])
     if user.authenticate(auth_params[:password])
-      # jwt = Auth.issue({user: user.id})
-      render json: user
+      jwt = Auth.issue({user: user.id})
+      render json: {jwt: jwt}
     else
     end
   end
