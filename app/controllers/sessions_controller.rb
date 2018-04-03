@@ -4,7 +4,6 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(username: auth_params[:username])
-    debugger;
     if user.authenticate(auth_params[:password])
       jwt = Auth.issue({user: user.id})
       render json: {jwt: jwt}
